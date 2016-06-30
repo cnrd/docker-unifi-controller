@@ -3,7 +3,7 @@
 # the unifi contoller is used to admin ubunquty wifi access points
 #
 FROM ubuntu
-MAINTAINER stuart nixon dotcomstu@gmail.com
+MAINTAINER cnrd git@cnrd.me
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN mkdir -p /var/log/supervisor /usr/lib/unifi/data && \
@@ -11,6 +11,9 @@ RUN mkdir -p /var/log/supervisor /usr/lib/unifi/data && \
 
 # add unifi and mongo repo
 ADD ./100-ubnt.list /etc/apt/sources.list.d/100-ubnt.list
+
+RUN mkdir -p /scripts
+ADD ./runscript.sh /scripts/runscript.sh
 
 # add ubiquity + 10gen(mongo) repo + key
 # update then install
@@ -22,4 +25,4 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv C0A52C50 && \
 VOLUME /usr/lib/unifi/data
 EXPOSE  8443 8880 8080 27117
 WORKDIR /usr/lib/unifi
-CMD ["java", "-Xmx256M", "-jar", "/usr/lib/unifi/lib/ace.jar", "start"]
+CMD ["/scripts/runscript.sh"]
