@@ -14,6 +14,7 @@ ADD ./100-ubnt.list /etc/apt/sources.list.d/100-ubnt.list
 
 RUN mkdir -p /scripts
 ADD ./runscript.sh /scripts/runscript.sh
+RUN chmod +x /scripts/runscript.sh
 
 # add ubiquity + 10gen(mongo) repo + key
 # update then install
